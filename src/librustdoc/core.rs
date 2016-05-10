@@ -161,7 +161,6 @@ pub fn run_core(search_paths: SearchPaths,
         driver::lower_and_resolve(&sess, &name, &mut defs, &krate, dep_graph, resolve::MakeGlobMap::No)
     };
 
-    let defs = &RefCell::new(defs);
     let arenas = ty::CtxtArenas::new();
     let hir_map = hir_map::map_crate(&mut hir_forest, defs);
 
