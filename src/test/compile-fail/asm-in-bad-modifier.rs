@@ -15,10 +15,13 @@ fn foo(x: isize) { println!("{}", x); }
 #[cfg(any(target_arch = "x86",
           target_arch = "x86_64",
           target_arch = "arm",
-          target_arch = "aarch64"))]
+          target_arch = "aarch64",
+          target_arch = "powerpc64",
+          target_arch = "powerpc64le"))]
 pub fn main() {
     let x: isize;
     let y: isize;
+    // Invalid asm for powerpc, however the syntax errors should be caught first
     unsafe {
         asm!("mov $1, $0" : "=r"(x) : "=r"(5)); //~ ERROR operand constraint contains '='
         asm!("mov $1, $0" : "=r"(y) : "+r"(5)); //~ ERROR operand constraint contains '+'
@@ -30,5 +33,7 @@ pub fn main() {
 #[cfg(not(any(target_arch = "x86",
               target_arch = "x86_64",
               target_arch = "arm",
-              target_arch = "aarch64")))]
+              target_arch = "aarch64",
+              target_arch = "powerpc64",
+              target_arch = "powerpc64le")))]
 pub fn main() {}

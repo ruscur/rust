@@ -9,6 +9,8 @@
 // except according to those terms.
 
 // ignore-android
+// ignore-powerpc64
+// ignore-powerpc64le
 
 #![feature(asm, rustc_attrs)]
 

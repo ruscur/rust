@@ -15,9 +15,12 @@ fn foo(x: isize) { println!("{}", x); }
 #[cfg(any(target_arch = "x86",
           target_arch = "x86_64",
           target_arch = "arm",
-          target_arch = "aarch64"))]
+          target_arch = "aarch64",
+          target_arch = "powerpc64",
+          target_arch = "powerpc64le"))]
 pub fn main() {
     let x: isize;
+    // Invalid asm for powerpc, however the error should be caught first
     unsafe {
         asm!("mov $1, $0" : "=r"(x) : "r"(x)); //~ ERROR use of possibly uninitialized variable: `x`
     }
@@ -27,5 +30,7 @@ pub fn main() {
 #[cfg(not(any(target_arch = "x86",
               target_arch = "x86_64",
               target_arch = "arm",
-              target_arch = "aarch64")))]
+              target_arch = "aarch64",
+              target_arch = "powerpc64",
+              target_arch = "powerpc64le")))]
 pub fn main() {}
